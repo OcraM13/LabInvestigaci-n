@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>Comentario</title>
+  </head>
+  <body>
+
+    {% include "menu/menu_interno.html" %}
+    <div class="row d-flex justify-content-center mt-5">
+
+      <div class="container col-sm-9">
+        {% if comentarios %}
+          {% for comentario in comentarios %}
+            {% for usuario in usuarios %}
+              {% if usuario.id_usuario == comentario.id_usuario.id_usuario %}
+                <div class="card">
+                  <div class="card-body">
+                    <h3>{{usuario.nombre}}</h3>
+                    <div class="card">
+                      <p class="mr-3 ml-3">{{comentario.text_comentario}}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        {% else %}
+          <div class="card ">
+            <div class="card-body">
+              <h1 class="card-title text-center">No hay comentarios</h1>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="card mt-4">
+          <h3 class="card-header" >Nuevo Comentario</h3>
+          <div class="card-body">
+            <form class="" method="post">
+              {% csrf_token %}
+              <input type="text" name="id_pdf" id="id_id_pdf"  value="{{id}}" style="display:none">
+              <label for="id_id_usuario" style="display:none" >Id usuario:</label><input name="id_usuario" id="id_id_usuario" readonly class="form-control" value="{{us.id_usuario}}" style="display:none">
+              <textarea name="text_comentario" cols="40" rows="3" required id="id_text_comentario" class="form-control"></textarea>
+              <button type="submit" name="button" class="btn float-right btn-primary">Comentar</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+</html>

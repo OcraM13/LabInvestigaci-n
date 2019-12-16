@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>Nuevo Usuario</title>
+
+    <script type="text/javascript" href="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="text/javascript" href="{% static 'js/ContraseñaScript.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+  </head>
+  <body>
+
+    {% if menu == 1 %}
+      {% include "menu/menu_interno.html" %}
+    {% else %}
+      {% include "menu/menu.html" %}
+    {% endif %}
+
+
+    <div class="container .col-xs-6 .col-md-4">
+
+          <div class="card">
+            <h1 class="card-header">Usuario</h1>
+            <div class="card-body">
+              <form class="" method="post">
+                {% csrf_token %}
+                <div class="card-title">
+                  <h5>ID: {{id}}</h5>
+                </div>
+
+                  <div class="form-group">
+                    <input type="text" name="username" id="id_username" placeholder="Usuario"  class="form-control" value="{{cuenta.usuario}}{{datos.usuario}}">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Contraseña"/>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Volver Introducir la Contraseña"/>
+                  </div>
+
+                  <div class="form-group">
+                    <p style="display:none;"><label></label><input type="text" name="id_usuario" id="id_id_usuario" value="{{datos.id_usuario}}{{cero}}"></p>
+                    <p style="display:none;"><label></label><input type="text" name="usuario" id="id_usuario" value="{{datos.usuario}}{{cero}}"></p>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" name="nombre" id="id_nombre"  class="form-control" placeholder="Nombre" value="{{datos.nombre}}">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" name="primer_ap" id="id_primer_ap"  class="form-control" placeholder="Apellido Paterno" value="{{datos.primer_ap}}">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" name="segundo_ap" id="id_segundo_ap"  class="form-control" placeholder="Apellido Materno" value="{{datos.segundo_ap}}">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" name="telefono" id="id_telefono"  class="form-control" placeholder="Telefono" value="{{datos.telefono}}">
+                  </div>
+
+                  <p style="display:none;"><label></label><input type="text" name="tipo" id="id_tipo" value="{{datos.tipo}}{{tipo}}"></p>
+
+                <button type="submit" name="button" class="btn float-right btn-primary ">Crear usuario</button>
+              </form>
+            </div>
+          </div>
+
+      <h4 class="text-center">{{ form.non_field_errors }}</h4>
+
+    </div>
+
+  </body>
+
+</html>

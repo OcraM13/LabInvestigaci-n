@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>Nuevo Miembro</title>
+  </head>
+  <body>
+    {% include "menu/menu_interno.html" %}
+    <div class="container">
+      <div class="card">
+        <h1 class="card-header" >Nueno Intregrante</h1>
+        <div class="card-body">
+          <h2></h2>
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="id_id_proyecto">Id proyecto:</label><input type="text" class="form-control" name="id_proyecto" readonly required id="id_id_proyecto" value="{{id}}">
+            </div>
+            <div class="form-group">
+            <label for="id_id_usuario">Id usuario:</label><input type="text" class="form-control" name="id_usuario" id="id_id_usuario" value="" >
+            </div>
+            <div class="form-group">
+            <label for="id_encargo">Encargo:</label><select class="form-control" name="encargo" required id="id_encargo">
+              <option value="Alumno">Alumno</option>
+              <option value="Asesor">Asesor</option>
+            </select>
+            </div>
+            <div class="form-group">
+            <button type="submit" name="button" class="btn float-right btn-primary">Agregar</button>
+            </div>
+          </form>
+        </div>
+        <h5 class="text-center">{{ form.non_field_errors }}</h5>
+      </div>
+
+      <div class="container mt-3">
+        <h3>Integrantes Actuales</h3>
+        <div class="container">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for integrante in integrantes %}
+                {% for usuario in usuarios %}
+                  {% if integrante.id_usuario.id_usuario == usuario.id_usuario %}
+
+                    <tr>
+                      <td>{{usuario.id_usuario}}</td>
+                      <td>{{usuario.nombre}}</td>
+                      <td>{{usuario.primer_ap}}</td>
+                      <td><button type="button" name="button" ondblclick="alerta()" class="btn btn-danger">Borrar</button>
+                          <script type="text/javascript">
+                            function alerta()
+                            {
+                              var opcion = confirm("¿Eliminar del proyecto?");
+                              if (opcion == true) {
+                                location.href="{% url 'proyecto:borrar_int' id  integrante.id %}"
+                              }
+                            }
+                          </script>
+                    </td>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>{{proyecto.nombre_proyecto}}</title>
+  </head>
+  <body>
+    {% include "menu/menu_interno.html" %}
+    <div class="row d-flex justify-content-center">
+
+      <div class="container col-sm-9">
+
+      <div class="card ">
+        <h5 class="card-header">{{proyectos.nombre_proyecto}}</h5>
+          <div class="card-body">
+              <div class="" style="padding-top:20px">
+                 <h3 class="card-title">ID: {{proyectos.id_proyecto}}</h3>
+                 <p class="card-text">Categoria:{{proyectos.clase}} porcentaje todal:{{proyectos.porsentaje}}</p>
+                 <h5 class="card-text">{{proyectos.nombre_sin}}</h5>
+                 <p class="card-text">{{proyectos.sintesis}}</p>
+              </div>
+              <a class="btn btn-primary float-right" href="{% url 'proyecto:editar_proyecto' proyectos.id_proyecto %}">Editar proyecto</a>
+         </div>
+      </div>
+
+    <div class="container">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for integrante in integrantes %}
+            {% for usuario in usuarios %}
+              {% if integrante.id_usuario.id_usuario == usuario.id_usuario %}
+
+                <tr>
+                  <td>{{usuario.id_usuario}}</td>
+                  <td>{{usuario.nombre}}</td>
+                  <td>{{usuario.primer_ap}}</td>
+                  <td><button type="button" name="button" ondblclick="alerta()" class="btn btn-danger">Borrar</button>
+                      <script type="text/javascript">
+                        function alerta()
+                        {
+                          var opcion = confirm("¿Eliminar del proyecto?");
+                          if (opcion == true) {
+                            location.href="{% url 'proyecto:borrar_int' proyectos.id_proyecto  integrante.id %}"
+                          }
+                        }
+                      </script>
+                </td>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="float-right ">
+      <a class="btn btn-primary mr-2" href="{% url 'proyecto:nuevo_pdf' proyectos.id_proyecto %}">Agregar PDF</a>
+      <a class="btn btn-primary" href="{% url 'proyecto:nuevo_miembro' proyectos.id_proyecto %}">Agregar Integrante</a>
+    </div>
+
+    </div>
+
+      <div class="row container col-sm-9">
+        {%for pdf in pdfs%}
+          <div class="card col-sm-3">
+            <h5 class="card-header">{{pdf.pdf_nombre}}</h5>
+            <div class="card-body">
+                <a type="button" name="button" href="/archivos/{{pdf.pdf}}" class="btn btn-primary ">Ver</a>
+                <a type="button" class="btn btn-primary" href="{% url 'proyecto:comentarios' pdf.id_pdf %}">Comentarios</a>
+            </div>
+          </div>
+        {%endfor%}
+      </div>
+
+    </div>
+
+
+
+
+
+  </body>
+
+</html>

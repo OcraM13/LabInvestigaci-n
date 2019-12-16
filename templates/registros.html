@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>Registros del Sistema</title>
+  </head>
+  <body>
+
+    {% include "menu/menu_admin.html" %}
+
+    <div class="container mt-5">
+
+      <div class="container form-group">
+        <h3>Filtro</h3>
+        <form class="" method="get">
+          <input type="text" class="form-control" name="filtro" id="id_filtro" value="">
+          <button type="submit" name="btn" class="btn btn-primary float-right">Filtrar</button>
+        </form>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-9 container">
+
+          <h1 class="card-header">Registos del Sistema</h1>
+
+          {% for registro in registros %}
+            <div class="card">
+              <div class="card-body">
+                {{registro.registro}}
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

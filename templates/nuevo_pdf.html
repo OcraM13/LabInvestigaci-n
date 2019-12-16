@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>Nuevo PDF</title>
+  </head>
+  <body>
+    {% include "menu/menu_interno.html" %}
+
+      <div class="container d-flex justify-content-center">
+        <div class="card">
+          <form method="post">
+
+            {% csrf_token %}
+            <h2 class="card-header">Subir PDF</h2>
+            <div class="card-body">
+              <label for="id_id_proyecto">Id proyecto: <input name="id_proyecto" required id="id_id_proyecto" readonly value="{{id}}" class="form-control">
+              <label for="id_pdf">Pdf:</label><input type="file" name="pdf" required id="id_pdf" class="form-control">
+              <button type="submit" name="button" class="btn float-right btn-primary">Subir</button>
+            </div>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+          </form>
+        </div>
+
+      </div>
+
+  </body>
+</html>

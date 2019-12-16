@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Nuevo Comentario</title>
+  </head>
+  <body>
+
+    <form class="" method="post">
+
+      {% csrf_token %}
+
+      <p style="display:none;" ><label for="id_id_pdf">Id pdf:</label><input type="text" value="{{pdf}}" name="id_pdf" required id="id_id_pdf"> </input></p>
+      <p style="display:none;" ><label for="id_id_usuario">Id usuario:</label><input type="text" value="{{usuario}}" name="id_usuario" id="id_id_usuario"></input></p>
+      <p><label for="id_text_comentario">Comentario:</label><textarea name="text_comentario" cols="40" rows="10" required id="id_text_comentario"></textarea></p>
+
+      <input type="submit" name="" value="Agregar">
+
+    </form>
+
+  </body>
+</html>

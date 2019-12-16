@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title>Crear Proyecto</title>
+  </head>
+  <body>
+    {% include "menu/menu_interno.html" %}
+    <div class="row d-flex justify-content-center" style="padding-top:100px">
+      <div class="card col-md-6">
+        <h5 class="card-header">{{acto}}</h5>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_id_proyecto">ID del proyecto</label>
+              <input type="text" readonly name="id_proyecto" id="id_id_proyecto" maxlength="5" class="form-control" placeholder="ID AutoGerado" value="{{id}}{{proyectos.id_proyecto}}" >
+            </div>
+            <div class="form-group">
+              <label for="id_clase">Clase:</label>
+              <select type="text" name="clase" maxlength="15" required id="id_clase" class="form-control" value="{{proyectos.clase}}">
+                <option value="Tesis">Tesis</option>
+                <option value="Tesina">Tesina</option>
+                <option value="Inovacion">Inovacion</option>
+                <option value="Cerificacion">Cerificacion</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="id_nombre_proyecto">Nombre proyecto:</label>
+              <input type="text" name="nombre_proyecto" maxlength="50" required id="id_nombre_proyecto" class="form-control" value="{{proyectos.nombre_proyecto}}">
+            </div>
+            <div class="form-group">
+              <label for="id_nombre_sin">Nombre sin:</label>
+              <input type="text" name="nombre_sin" maxlength="30" required id="id_nombre_sin" class="form-control" value="{{proyectos.nombre_sin}}">
+            </div>
+            <div class="form-group">
+              <label for="id_sintesis">Sintesis:</label>
+              <textarea name="sintesis" cols="50" rows="5" required id="id_sintesis" class="form-control">{{proyectos.sintesis}}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="id_porsentaje">Porsentaje:</label>
+              <input type="number" name="porsentaje" required id="id_porsentaje"  class="form-control" value="{{proyectos.porsentaje}}">
+            </div>
+        <button type="submit" name="" class="btn float-right btn-primary">Crear</button>
+      </form>
+      <h5 class="text-center">{{ form.non_field_errors }}</h5>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+.logo{
+    width: 50px;
+    height: auto;
+}
+
+.logoU{
+    width: 30px;
+    height: auto;
+}
+
+.inicio_sesion{
+    width: 25px;
+    height: auto;
+    padding-right: 5px;
+}
+
+#header h4{
+  color: #ffffff;
+  padding-left: 10px;
+}
+
+#header h5{
+  color: #ffffff;
+  margin-left: 30px;
+}
+
+#header a{
+  margin-right: 7px;
+}
+
+#header .content{
+  margin-left: 0px;
+}
+#header button{
+  margin-left: 10px;
+}
