@@ -19,6 +19,10 @@ from .views import comentarios
 from .views import lista_registros
 from .views_json import proyectos_json
 from .views_json import sesion_json
+from .views_json import proyectos_busca_json
+from .views_json import agregar_proyecto_json
+from .views_json import eliminar_proyecto_json
+from .views_json import editar_proyecto_json
 #from .views import sesion
 
 urlpatterns = [
@@ -42,4 +46,8 @@ urlpatterns = [
     path('registros/', login_required(lista_registros), name='registros' ),
     path('proyectos_json/', proyectos_json, name='proyectos_json'),
     path('sesion_json/<us>/<con>', sesion_json, name='sesion_json'),
+    path('proyectos_busca_json/<bus>', proyectos_busca_json, name='proyectos_busca_json'),
+    path('agregar_proyecto_json/<clase>/<nombre>/<nombre_sin>/<sin>/<por>', agregar_proyecto_json, name='agregar_proyecto_json'),
+    path('eliminar_proyecto_json/<id>', eliminar_proyecto_json, name='eliminar_proyecto_json'),
+    path('editar_proyecto_json/<id>/<clase>/<nombre>/<nombre_sin>/<sin>/<por>', editar_proyecto_json, name='editar_proyecto_json'),
 ]

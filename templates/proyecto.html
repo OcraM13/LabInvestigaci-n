@@ -3,6 +3,7 @@
   <head>
     {% load staticfiles %}
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="{% static 'img/icons/logotec.ico' %}"/>
     <title>{{proyecto.nombre_proyecto}}</title>
   </head>
   <body>
@@ -11,11 +12,11 @@
 
       <div class="container col-sm-9">
 
-      <div class="card ">
-        <h5 class="card-header">{{proyectos.nombre_proyecto}}</h5>
+      <div class="card mt-3">
           <div class="card-body">
+              <h2 class="card-title">{{proyectos.nombre_proyecto}}</h2>
               <div class="" style="padding-top:20px">
-                 <h3 class="card-title">ID: {{proyectos.id_proyecto}}</h3>
+                 <h4 class="card-title">ID: {{proyectos.id_proyecto}}</h4>
                  <p class="card-text">Categoria:{{proyectos.clase}} porcentaje todal:{{proyectos.porsentaje}}</p>
                  <h5 class="card-text">{{proyectos.nombre_sin}}</h5>
                  <p class="card-text">{{proyectos.sintesis}}</p>
@@ -31,18 +32,20 @@
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
+            <th scope="col">Encargo</th>
             <th scope="col">Eliminar</th>
           </tr>
         </thead>
         <tbody>
           {% for integrante in integrantes %}
             {% for usuario in usuarios %}
-              {% if integrante.id_usuario.id_usuario == usuario.id_usuario %}
+              {% if integrante.id_usuario == usuario.id_usuario %}
 
                 <tr>
                   <td>{{usuario.id_usuario}}</td>
                   <td>{{usuario.nombre}}</td>
                   <td>{{usuario.primer_ap}}</td>
+                  <td>{{integrante.encargo}}</td>
                   <td><button type="button" name="button" ondblclick="alerta()" class="btn btn-danger">Borrar</button>
                       <script type="text/javascript">
                         function alerta()

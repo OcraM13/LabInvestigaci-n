@@ -45,14 +45,38 @@ def crear_proyecto(request):
         proyecto_form = ProyectoForm(request.POST)
         print(proyecto_form)
         if proyecto_form.is_valid():
-            print("----------------------------------------------------------------")
+            num =""
 
             post = proyecto_form.save(commit=False)
 
-            num = generar_numero('P')
-            post.id_proyecto = num
+            comprobarcion = True
+
+            while comprobarcion:
+                num = generar_numero('P')
+                post.id_proyecto = num
+
+                if proyecto.objects.filter(id_proyecto = num):
+                    comprobarcion = True
+                else:
+                    comprobarcion = False
 
             post.save()
+
+            usuarios = datos_usario.objects.get(usuario=str(request.user))
+
+            en = ""
+
+            if usuarios.id_usuario[0] == 'E':
+                en = "Estudiante"
+            else:
+                en = "Asesor"
+
+            us = usuarios.id_usuario
+
+            integrantes = integrantes_proyecto(id_proyecto = num, id_usuario = us , encargo = en)
+
+            integrantes.save()
+
             generar_registro(request, 'creo proyecto ' + num, 0)
             return HttpResponseRedirect('/Lab/integrantes/'+post.id_proyecto)
 
@@ -73,10 +97,19 @@ def crear_cuenta(request):
 
             post_u = post_usuario.save(commit=False)
 
-            if post_u.tipo == '1':
-                num = generar_numero('E')
-            else:
-                num = generar_numero('D')
+            comprobar = True
+
+            while comprobar:
+
+                if post_u.tipo == '1':
+                    num = generar_numero('E')
+                else:
+                    num = generar_numero('D')
+
+                if datos_usario.objects.filter(id_usuario = num):
+                    comprobar = True
+                else:
+                    comprobar = False
 
             cuenta = User.objects.create(username=num)
 
@@ -129,7 +162,10 @@ def crear_usuario_oficial(request):
                     u.delete()
 
                 return HttpResponseRedirect('/Lab')
-
+            else:
+                messages.info(request, 'Datos Invalidos')
+        else:
+            messages.info(request, 'Datos Invalidos')
     else:
         usuarios_form = UserCreationForm()
         datos_form = UsuarioForm()
@@ -166,9 +202,18 @@ def nuevo_miembro(request, id):
 
 
         if miembro_form.is_valid():
-            post = miembro_form.save()
-            generar_registro(request, 'agreo a ' + str(post.id_usuario.id_usuario) +' al proyecto ' + id, 0)
-            return HttpResponseRedirect('/Lab/integrantes/'+id)
+
+            post = miembro_form.save(commit=False)
+
+            if integrantes_proyecto.objects.filter(id_usuario= post.id_usuario):
+                post = miembro_form.save()
+                generar_registro(request, 'agreo a ' + str(post.id_usuario) +' al proyecto ' + id, 0)
+                return HttpResponseRedirect('/Lab/integrantes/'+id)
+            else:
+                messages.info(request, 'ID de Usuario no Existente')
+
+        else:
+            messages.info(request, 'Campos Incorrectos')
 
     else:
         miembro_form = MiembroFrom()
@@ -192,7 +237,7 @@ def comentarios(request,id):
         comentario_from = ComentarioFrom(request.POST)
         if comentario_from.is_valid():
             comentario_from.save()
-            generar_registro(request, 'comento en el pdf "' + pdf_con.pdf_nombre + '" del proyecto ' + pdf_con.id_proyecto.id_proyecto, 0)
+            generar_registro(request, 'comento en el pdf "' + pdf_con.pdf_nombre + '" del proyecto ' + pdf_con.id_proyecto, 0)
             return HttpResponseRedirect('/Lab/comentarios/'+id)
     comentario_from = ComentarioFrom()
     print(comentario_from)
@@ -281,8 +326,6 @@ def editar_proyecto(request, id):
 
 def editar_usuario(request):
 
-    usuario = str(request.user)
-
     usuarios = User.objects.get(username=str(request.user))
     datos_usuarios = datos_usario.objects.get(usuario = usuario)
 
@@ -317,10 +360,17 @@ def editar_usuario(request):
 def borrar_integrante(request, id, us):
 
     integrante = integrantes_proyecto.objects.get(id = us)
-    usuario_con = datos_usario.objects.get(id_usuario = integrante.id_usuario.id_usuario)
+    usuario_con = datos_usario.objects.get(id_usuario = integrante.id_usuario)
     integrante.delete()
 
-    generar_registro(request, 'borro a ' + usuario_con.nombre + ' ' + usuario_con.primer_ap + ' (' + usuario_con.id_usuario + ')' + ' del proyecto ' + id , 0)
+    if integrantes_proyecto.objects.filter(id_proyecto = id):
+        generar_registro(request, 'borro a ' + usuario_con.nombre + ' ' + usuario_con.primer_ap + ' (' + usuario_con.id_usuario + ')' + ' del proyecto ' + id , 0)
+    else:
+        borrar = proyecto.objects.get(id_proyecto = id)
+        borrar.delete()
+        generar_registro(request, 'Proyecto borrado por '+ usuario_con.nombre + ' ' + usuario_con.primer_ap + 'por falta de integrantes' , 0)
+        generar_registro(request, 'borro a ' + usuario_con.nombre + ' ' + usuario_con.primer_ap + ' (' + usuario_con.id_usuario + ')' + ' del proyecto ' + id , 0)
+        return HttpResponseRedirect('/Lab/lista_proyectos')
 
     return HttpResponseRedirect('/Lab/integrantes/'+id)
 
@@ -335,13 +385,13 @@ class Sesion(FormView):
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            generar_registro(request, 'inicio sesion', 0)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return super(Sesion,self).dispatch(request, *args, **kwargs)
 
     def form_valid(self,form):
         login(self.request,form.get_user())
+        #generar_registro(request, 'inicio sesion', 0)
         return super(Sesion,self).form_valid(form)
 
 def salirUsuario(request):
@@ -366,7 +416,6 @@ def generar_registro(request, mensaje, n):
         usuario_str = str(request.user) + " "
         nuevo_registro = registro(registro= usuario_str + mensaje)
         nuevo_registro.save()
-
 
 
 #def consultaID():

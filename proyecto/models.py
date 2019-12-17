@@ -25,8 +25,8 @@ class proyecto(models.Model):
 
 class integrantes_proyecto(models.Model):
     id = models.AutoField(primary_key = True)
-    id_proyecto = models.ForeignKey(proyecto, on_delete = models.CASCADE)
-    id_usuario = models.ForeignKey(datos_usario, on_delete = models.CASCADE, default='')
+    id_proyecto = models.CharField(max_length = 5)
+    id_usuario = models.CharField(max_length = 5)
     encargo = models.CharField(max_length = 10)
 
 class pdf(models.Model):
