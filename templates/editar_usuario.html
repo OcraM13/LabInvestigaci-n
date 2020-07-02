@@ -4,7 +4,11 @@
     {% load staticfiles %}
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="{% static 'img/icons/logotec.ico' %}"/>
-    <title>Nuevo Usuario</title>
+    {% if 0 == cero %}
+      <title>Nuevo Usuario</title>
+    {% else %}
+      <title>Editar Usuario</title>
+    {% endif %}
 
     <script type="text/javascript" href="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script type="text/javascript" href="{% static 'js/ContraseñaScript.js' %}"></script>
@@ -13,16 +17,15 @@
   </head>
   <body>
 
-    {% if menu == 1 %}
-      {% include "menu/menu_interno.html" %}
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
     {% else %}
-      {% include "menu/menu.html" %}
+      {% include "menu/menu_interno.html" %}
     {% endif %}
 
+    <div class="row d-flex justify-content-center wrapper contenido " style="padding-top:50px">
 
-    <div class="container .col-xs-6 .col-md-4">
-
-          <div class="card">
+          <div class="card  col-md-6">
             <h1 class="card-header">Usuario</h1>
             <div class="card-body">
               <form class="" method="post">
@@ -32,10 +35,11 @@
                 </div>
 
                   <div class="form-group">
-                    <input type="text" name="username" id="id_username" placeholder="Usuario"  class="form-control" value="{{cuenta.usuario}}{{datos.usuario}}">
+                    <input type="text" name="username" id="id_username" placeholder="Usuario" class="form-control" value="{{cuenta.usuario}}{{datos.usuario}}">
                   </div>
 
                   <div class="form-group">
+                    <p>La contraseña debe tener al menos 8 caracteres con letras y números, comienza con una letra</p>
                     <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Contraseña"/>
                   </div>
 
@@ -44,8 +48,14 @@
                   </div>
 
                   <div class="form-group">
+                    {% if 0 == cero %}
                     <p style="display:none;"><label></label><input type="text" name="id_usuario" id="id_id_usuario" value="{{datos.id_usuario}}{{cero}}"></p>
                     <p style="display:none;"><label></label><input type="text" name="usuario" id="id_usuario" value="{{datos.usuario}}{{cero}}"></p>
+                    {% else %}
+                    <p style="display:none;"><label></label><input type="text" name="id_usuario" id="id_id_usuario" value="{{datos.id_usuario}}"></p>
+                    <p style="display:none;"><label></label><input type="text" name="usuario" id="id_usuario" value="{{datos.usuario}}"></p>
+                    {% endif %}
+
                   </div>
 
                   <div class="form-group">
@@ -66,7 +76,12 @@
 
                   <p style="display:none;"><label></label><input type="text" name="tipo" id="id_tipo" value="{{datos.tipo}}{{tipo}}"></p>
 
-                <button type="submit" name="button" class="btn float-right btn-primary ">Crear usuario</button>
+                  {% if 0 == cero %}
+                    <button type="submit" name="button" class="btn float-right btn-primary ">Crear usuario</button>
+                  {% else %}
+                    <button type="submit" name="button" class="btn float-right btn-primary ">Actializar</button>
+                  {% endif %}
+
               </form>
             </div>
             {% if messages %}

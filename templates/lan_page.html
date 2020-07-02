@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="icon" type="image/png" href="{% static 'img/icons/logotec.ico' %}"/>
+    <title>landing page</title>
+  </head>
+  <body>
+
+
+    {% include "menu/menu_admin.html" %}
+
+    <div class="container mt-3 wrapper contenido ">
+      <div class="Container mb-3">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample0" role="button" aria-expanded="false" aria-controls="collapseExample0"><h3>Agregar Anuncio</h3></a>
+        <div class="collapse" id="collapseExample0">
+          <form class="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group m-5">
+              <label for="id_titulo">Titulo:</label>
+              <input type="text" class="form-control" name="titulo" maxlength="100" required id="id_titulo">
+
+              <label for="id_imagen">Imagen:</label>
+              <input type="file" name="imagen" value="" class="form-control" accept="image/*"  id="id_imagen">
+              <label for="id_descripcion">Descripcion:</label>
+              <textarea name="descripcion" cols="40" value="" class="form-control" rows="2" required id="id_descripcion"></textarea>
+              <label for="id_link">Link:</label>
+              <textarea name="link" cols="40" value="" class="form-control" rows="1" required id="id_link"></textarea>
+              <label for="id_visible" style="display:none;" >Visible:</label>
+              <input type="text" name="visible" style="display:none;" maxlength="1" value="1" required id="id_visible">
+              <button type="sumbit" class="btn btn-primary float-right mt-2 " name="button">subir</button>
+            </div>
+        </div>
+      </div>
+
+      <div class="container mt-2">
+
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1"><h3>Anuncios Activados</h3></a>
+        <div class="collapse" id="collapseExample1">
+        {%for lan1 in lan_V%}
+
+          <div class="card m-3">
+            <a class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{{lan1.titulo}}</a>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card card-body">
+                <h6>Descripcion</h6>
+                <p>{{lan1.descripcion}}</p>
+                <h6>Link</h6>
+                <a href="{{lan1.link}}">{{lan1.link}}</a>
+                <div class="float-right">
+                  <a type="button" class="btn btn-danger float-right ml-2" href="{% url 'proyecto:dec_lan' lan1.id %}">Desactivar</a>
+                  <a type="button" class="btn btn-primary float-right mr-2" href="/archivos/{{lan1.imagen}}">Ver Imagen</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        {%endfor%}
+        </div>
+        </div>
+
+
+        <div class="container mt-2">
+          <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><h3>Anuncios Desactivados</h3></a>
+          <div class="collapse" id="collapseExample">
+          {%for lan in land_N%}
+
+            <div class="card m-3">
+              <a class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">{{lan.titulo}}</a>
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card card-body">
+                  <h6>Descripcion</h6>
+                  <p>{{lan.descripcion}}</p>
+                  <h6>Link</h6>
+                  <a href="{{lan.link}}">{{lan.link}}</a>
+                  <div class="float-right">
+                    <a type="button" class="btn btn-danger float-right ml-2" href="{% url 'proyecto:act_lan' lan.id %}">Activar</a>
+                    <a type="button" class="btn btn-primary float-right mr-2" href="/archivos/{{lan.imagen}}">Ver Imagen</a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          {%endfor%}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    </form>
+
+
+
+  </body>
+</html>

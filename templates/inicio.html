@@ -8,11 +8,44 @@
     <title> {% block title %} Inicio {% endblock %}</title>
 
     <link rel="icon" type="image/png" href="{% static 'img/icons/logotec.ico' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}">
 
   </head>
-  <body>
-
+  <nav>
     {% include "menu/menu_inicio.html" %}
+  </nav>
+
+  <body style="background-image: url({% static 'img/fondo.jpg' %});  background-color: #cccccc;">
+
+    <div class=" wrapper contenido mt-5 bg-gradient-success text-white btn-lg btn-block">
+
+      <div id="carouselExampleControls" class="carousel slide container" data-ride="carousel">
+
+        <div class="carousel-inner">
+
+        {%for lan in landing %}
+          <div class="carousel-item {%if activo == lan.id%} active {%endif%}">
+            <a href="//{{lan.link}}"><img class="d-block w-100 img" style="height: 70vh;" src="archivos/{{lan.imagen}}"></a>
+            <div class="bg-secondary text-white text-center">
+              <h5>{{lan.titulo}}</h5>
+              <p>{{lan.descripcion}}</p>
+            </div>
+          </div>
+        {%endfor%}
+
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+    </div>
 
   </body>
 

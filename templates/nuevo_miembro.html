@@ -7,8 +7,12 @@
     <title>Nuevo Miembro</title>
   </head>
   <body>
-    {% include "menu/menu_interno.html" %}
-    <div class="container">
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
+    {% else %}
+      {% include "menu/menu_interno.html" %}
+    {% endif %}
+    <div class="container wrapper contenido mt-3">
       <div class="card">
         <h1 class="card-header" >Nueno Intregrante</h1>
         <div class="card-body">
@@ -21,9 +25,9 @@
             <div class="form-group">
             <label for="id_id_usuario">Id usuario:</label><input type="text" class="form-control" name="id_usuario" id="id_id_usuario" value="" >
             </div>
-            <div class="form-group " style="display:none;">
+            <div class="form-group ">
             <label for="id_encargo">Encargo:</label><select class="form-control" name="encargo" required id="id_encargo">
-              <option value="Alumno">Alumno</option>
+              <option value="Alumno">Integrante</option>
               <option value="Asesor">Asesor</option>
             </select>
             </div>
@@ -63,17 +67,23 @@
                       <td>{{usuario.nombre}}</td>
                       <td>{{usuario.primer_ap}}</td>
                       <td>{{integrante.encargo}}</td>
-                      <td><button type="button" name="button" ondblclick="alerta()" class="btn btn-danger">Borrar</button>
-                          <script type="text/javascript">
-                            function alerta()
-                            {
-                              var opcion = confirm("¿Eliminar del proyecto?");
-                              if (opcion == true) {
-                                location.href="{% url 'proyecto:borrar_int' id  integrante.id %}"
-                              }
-                            }
-                          </script>
-                    </td>
+                      <td><button type="button" name="button" data-toggle="modal" data-target="#exampleModalCenter{{integrante.id}}" class="btn btn-danger">Borrar</button></td>
+                      <div class="modal fade" id="exampleModalCenter{{integrante.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{integrante.id}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle{{integrante.id}}">Borrar Miembro</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                              <a type="button" class="btn btn-primary" href="{% url 'proyecto:borrar_int' id  integrante.id %}" >Borrar</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                   {% endif %}
                 {% endfor %}
               {% endfor %}

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang=" " dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <link rel="icon" type="image/png" href="{% static 'img/icons/logotec.ico' %}"/>
+    <title></title>
+  </head>
+  <body>
+
+    {% include "menu/menu_admin.html" %}
+
+    <div class="container mt-5 mb-5 wrapper contenido ">
+      <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample0" role="button" aria-expanded="false" aria-controls="collapseExample0"><h3>Agregar Documento</h3></a>
+      <div class="collapse" id="collapseExample0">
+        <form class="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group m-5">
+            <label for="id_documento_nombre">Documento nombre:</label>
+            <input type="text" name="documento_nombre" maxlength="50" class="form-control" required id="id_documento_nombre">
+            <label for="id_clase">Clase:</label>
+            <select type="text" name="clase" maxlength="30" required id="id_clase" class="form-control" selected value="{{proyectos.clase}}">
+              <option value="Articulo Revista Indexada"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Articulo Revista Indexada</option>
+              <option value="Articulo Revista Indexada JCR"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Articulo Revista Indexada JCR</option>
+              <option value="Patente"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Patente</option>
+              <option value="Derecho de Autor"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Derecho de Autor</option>
+              <option value="innovación"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>innovación</option>
+              <option value="Proceedings"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Proceedings</option>
+              <option value="Tesis"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Tesis</option>
+              <option value="Cerificación"
+              {%if proyectos.clase == 'innovación' %}
+                selected="selected"
+              {%endif%}>Cerificación</option>
+            </select>
+            <label for="id_documento">Documento:</label>
+            <input type="file" name="documento" class="form-control" required id="id_documento">
+            <label for="id_visible" style="display:none;">Visible:</label>
+            <input type="text" name="visible" style="display:none;" maxlength="1" value="1" class="form-control" required id="id_visible">
+            <button type="sumbit" class="btn btn-primary float-right mt-2 " name="button">subir</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Activo Articulo de Revista Indexada -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1"><h3>Articulo de Revista Indexada</h3></a>
+        <div class="collapse" id="collapseExample1">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Activo Articulo de Revista Indexada'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Articulo de Revista Indexada JDR-->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2"><h3>Articulo de Revista Indexada JDR</h3></a>
+        <div class="collapse" id="collapseExample2">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Activo Articulo de Revista Indexada JDR'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Patente -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3"><h3>Patente</h3></a>
+        <div class="collapse" id="collapseExample3">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Patente'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Derecho de Autor -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample4"><h3>Derecho de Autor</h3></a>
+        <div class="collapse" id="collapseExample4">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Derecho de Autor'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Innovación -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample5" role="button" aria-expanded="false" aria-controls="collapseExample5"><h3>innovación</h3></a>
+        <div class="collapse" id="collapseExample5">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'innovación'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Proceedings -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample6" role="button" aria-expanded="false" aria-controls="collapseExample6"><h3>Proceedings</h3></a>
+        <div class="collapse" id="collapseExample6">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Proceedings'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Tesis -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample7" role="button" aria-expanded="false" aria-controls="collapseExample7"><h3>Tesis</h3></a>
+        <div class="collapse" id="collapseExample7">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Tesis'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Activo Certificación -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample8" role="button" aria-expanded="false" aria-controls="collapseExample8"><h3>Certificación</h3></a>
+        <div class="collapse" id="collapseExample8">
+          {%for doc in documento%}
+            {%if doc.visible == '1' and doc.clase == 'Certificación'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:des_documento' doc.id %}" class="btn btn-primary">Desactivar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+      <!-- Documentos Desactivados -->
+      <div class="mt-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample9" role="button" aria-expanded="false" aria-controls="collapseExample9"><h3>Dcumentos Desactivado</h3></a>
+        <div class="collapse" id="collapseExample9">
+          {%for doc in documento%}
+            {%if doc.visible == '0'%}
+              <div class="card m-2">
+                <div class="row">
+                  <h4 class="col mt-1 ml-2">{{doc.documento_nombre}}</h4>
+                  <h5 class="col mt-1 ml-2">{{doc.clase}}</h5>
+                  <div class="btn-group col" role="group" aria-label="Basic example">
+                    <a type="button" name="button" href="/archivos/{{doc.documento}}" class="btn btn-primary">Descargar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:act_documento' doc.id %}" class="btn btn-primary">Activar</a>
+                    <a type="button" name="button" href="{% url 'proyecto:elim_documento' doc.id %}" class="btn btn-primary">Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

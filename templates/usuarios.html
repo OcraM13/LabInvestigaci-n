@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <title>Usuarios Registrados</title>
+  </head>
+  <body>
+
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
+    {% else %}
+      {% include "menu/menu_interno.html" %}
+    {% endif %}
+
+  </body>
+</html>

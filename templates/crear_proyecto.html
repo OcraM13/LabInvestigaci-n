@@ -7,8 +7,12 @@
     <title>Crear Proyecto</title>
   </head>
   <body>
-    {% include "menu/menu_interno.html" %}
-    <div class="row d-flex justify-content-center" style="padding-top:100px">
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
+    {% else %}
+      {% include "menu/menu_interno.html" %}
+    {% endif %}
+    <div class="row d-flex justify-content-center wrapper contenido " style="padding-top:100px">
       <div class="card col-md-6">
         <h5 class="card-header">{{acto}}</h5>
         <div class="card-body">
@@ -20,11 +24,39 @@
             </div>
             <div class="form-group">
               <label for="id_clase">Clase:</label>
-              <select type="text" name="clase" maxlength="15" required id="id_clase" class="form-control" value="{{proyectos.clase}}">
-                <option value="Tesis">Tesis</option>
-                <option value="Tesina">Tesina</option>
-                <option value="Inovacion">Inovacion</option>
-                <option value="Cerificacion">Cerificacion</option>
+              <select type="text" name="clase" maxlength="30" required id="id_clase" class="form-control" selected value="{{proyectos.clase}}">
+                <option value="Articulo Revista Indexada"
+                {%if proyectos.clase == 'Articulo Revista Indexada' %}
+                  selected="selected"
+                {%endif%}>Articulo Revista Indexada</option>
+                <option value="Articulo Revista Indexada JCR"
+                {%if proyectos.clase == 'Articulo Revista Indexada JCR' %}
+                  selected="selected"
+                {%endif%}>Articulo Revista Indexada JCR</option>
+                <option value="Patente"
+                {%if proyectos.clase == 'Patente' %}
+                  selected="selected"
+                {%endif%}>Patente</option>
+                <option value="Derecho de Autor"
+                {%if proyectos.clase == 'Derecho de Autor' %}
+                  selected="selected"
+                {%endif%}>Derecho de Autor</option>
+                <option value="innovación"
+                {%if proyectos.clase == 'innovación' %}
+                  selected="selected"
+                {%endif%}>innovación</option>
+                <option value="Proceedings"
+                {%if proyectos.clase == 'Proceedings' %}
+                  selected="selected"
+                {%endif%}>Proceedings</option>
+                <option value="Tesis"
+                {%if proyectos.clase == 'Tesis' %}
+                  selected="selected"
+                {%endif%}>Tesis</option>
+                <option value="Cerificación"
+                {%if proyectos.clase == 'Cerificación' %}
+                  selected="selected"
+                {%endif%}>Cerificación</option>
               </select>
             </div>
             <div class="form-group">
@@ -32,11 +64,11 @@
               <input type="text" name="nombre_proyecto" maxlength="50" required id="id_nombre_proyecto" class="form-control" value="{{proyectos.nombre_proyecto}}">
             </div>
             <div class="form-group">
-              <label for="id_nombre_sin">Nombre sin:</label>
+              <label for="id_nombre_sin">Titulo Síntesis:</label>
               <input type="text" name="nombre_sin" maxlength="30" required id="id_nombre_sin" class="form-control" value="{{proyectos.nombre_sin}}">
             </div>
             <div class="form-group">
-              <label for="id_sintesis">Sintesis:</label>
+              <label for="id_sintesis">Síntesis:</label>
               <textarea name="sintesis" cols="50" rows="5" required id="id_sintesis" class="form-control">{{proyectos.sintesis}}</textarea>
             </div>
             <div class="form-group">

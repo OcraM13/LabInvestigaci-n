@@ -7,25 +7,47 @@
     <title>{{proyecto.nombre_proyecto}}</title>
   </head>
   <body>
-    {% include "menu/menu_interno.html" %}
-    <div class="row d-flex justify-content-center">
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
+    {% else %}
+      {% include "menu/menu_interno.html" %}
+    {% endif %}
 
-      <div class="container col-sm-9">
+    <div class="row d-flex justify-content-center mb-5" >
 
-      <div class="card mt-3">
-          <div class="card-body">
-              <h2 class="card-title">{{proyectos.nombre_proyecto}}</h2>
-              <div class="" style="padding-top:20px">
-                 <h4 class="card-title">ID: {{proyectos.id_proyecto}}</h4>
-                 <p class="card-text">Categoria:{{proyectos.clase}} porcentaje todal:{{proyectos.porsentaje}}</p>
-                 <h5 class="card-text">{{proyectos.nombre_sin}}</h5>
-                 <p class="card-text">{{proyectos.sintesis}}</p>
-              </div>
-              <a class="btn btn-primary float-right" href="{% url 'proyecto:editar_proyecto' proyectos.id_proyecto %}">Editar proyecto</a>
-         </div>
+      <div class=" col-sm-9">
+
+        <a class="btn btn-light btn-lg btn-block mt-4" data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1"><h3>{{proyectos.nombre_proyecto}}  ({{proyectos.porsentaje}}%)</h3></a>
+        <div class="card collapse" id="collapseExample1">
+            <div class="card-body">
+                <h2 class="card-title">{{proyectos.nombre_proyecto}}</h2>
+                <div class="" style="padding-top:20px">
+                   <h4 class="card-title">ID: {{proyectos.id_proyecto}}</h4>
+                   <p class="card-text">Categoria: {{proyectos.clase}} </p>
+                   <p>porcentaje todal: {{proyectos.porsentaje}}%</p>
+                   <h5 class="card-text">{{proyectos.nombre_sin}}</h5>
+                   <p class="card-text">{{proyectos.sintesis}}</p>
+                </div>
+                <a class="btn btn-primary float-right" href="{% url 'proyecto:editar_proyecto' proyectos.id_proyecto %}">Editar proyecto</a>
+           </div>
+        </div>
+
+      <div class="mt-2 mb-2">
+        <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2"><h3>Documentos</h3></a>
+        <div class=" card collapse" id="collapseExample2">
+            {%for d in doc%}
+              {%if proyectos.clase == d.clase%}
+                <div class="row m-3">
+                    <h5 class="mt-2 col">{{d.documento_nombre}}</h5>
+                    <a type="button" name="button" href="/archivos/{{d.documento}}" class="btn btn-primary col col-lg-2">Descargar</a>
+                </div>
+              {%endif%}
+            {%endfor%}
+        </div>
       </div>
 
-    <div class="container">
+    <a class="btn btn-light btn-lg btn-block " data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3"><h3>Integrantes</h3></a>
+    <div class=" collapse mb-2" id="collapseExample3">
       <table class="table table-borderless">
         <thead>
           <tr>
@@ -33,7 +55,10 @@
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">Encargo</th>
-            <th scope="col">Eliminar</th>
+            {% if 1 <= admin %}
+              <th scope="col">Eliminar</th>
+            {% endif %}
+
           </tr>
         </thead>
         <tbody>
@@ -46,47 +71,55 @@
                   <td>{{usuario.nombre}}</td>
                   <td>{{usuario.primer_ap}}</td>
                   <td>{{integrante.encargo}}</td>
-                  <td><button type="button" name="button" ondblclick="alerta()" class="btn btn-danger">Borrar</button>
-                      <script type="text/javascript">
-                        function alerta()
-                        {
-                          var opcion = confirm("¿Eliminar del proyecto?");
-                          if (opcion == true) {
-                            location.href="{% url 'proyecto:borrar_int' proyectos.id_proyecto  integrante.id %}"
-                          }
-                        }
-                      </script>
-                </td>
+
               {% endif %}
             {% endfor %}
           {% endfor %}
         </tbody>
       </table>
-    </div>
-    <div class="float-right ">
-      <a class="btn btn-primary mr-2" href="{% url 'proyecto:nuevo_pdf' proyectos.id_proyecto %}">Agregar PDF</a>
-      <a class="btn btn-primary" href="{% url 'proyecto:nuevo_miembro' proyectos.id_proyecto %}">Agregar Integrante</a>
-    </div>
-
+      <div class="float-right ">
+        <a class="btn btn-primary" href="{% url 'proyecto:nuevo_miembro' proyectos.id_proyecto %}">Modificar</a>
+      </div>
     </div>
 
-      <div class="row container col-sm-9">
+
+      <h3 class="mt-5 mb-3">Documentos Subidos</h3>
+      <div class="float-right mr-2">
+        <a class="btn btn-primary mr-2" href="{% url 'proyecto:nuevo_pdf' proyectos.id_proyecto %}">Agregar PDF</a>
+      </div>
+    </div>
+
+      <div class="row col-sm-9 text-center">
         {%for pdf in pdfs%}
-          <div class="card col-sm-3">
+
+          <div class="card col-sm-3 ml-3 mb-2">
             <h5 class="card-header">{{pdf.pdf_nombre}}</h5>
             <div class="card-body">
                 <a type="button" name="button" href="/archivos/{{pdf.pdf}}" class="btn btn-primary ">Ver</a>
                 <a type="button" class="btn btn-primary" href="{% url 'proyecto:comentarios' pdf.id_pdf %}">Comentarios</a>
+                <a type="button" name="button" data-toggle="modal" href="" data-target="#exampleModalCenter{{pdf.id_pdf}}" href="" class="btn btn-danger">Borrar</a>
+            </div>
+          </div>
+          <div class="modal fade" id="exampleModalCenter{{pdf.id_pdf}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{pdf.id_pdf}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle{{pdf.id_pdf}}">Borrar Comentario</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <a type="button" class="btn btn-primary" href="{% url 'proyecto:borrar_pdf' pdf.id_proyecto.id_proyecto pdf.id_pdf %}" >Borrar</a>
+                </div>
+              </div>
             </div>
           </div>
         {%endfor%}
       </div>
 
     </div>
-
-
-
-
 
   </body>
 

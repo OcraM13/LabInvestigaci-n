@@ -1,7 +1,11 @@
 .logo{
-    width: 5px;
+    width: 50px;
     height: auto;
 }
+
+.barra{
+      padding-top: 0%;
+    }
 
 .logoU{
     width: 30px;
@@ -14,9 +18,14 @@
     padding-right: 5px;
 }
 
+#header{
+  width: 100%;
+  z-index: 100;
+}
+
 #header h4{
   color: #ffffff;
-  padding-left: 10px;
+  font-size: 2.3vw;
 }
 
 #header h5{
@@ -33,4 +42,8 @@
 }
 #header button{
   margin-left: 10px;
+}
+
+.img{
+  height: 1.5em import;
 }

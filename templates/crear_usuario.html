@@ -10,7 +10,7 @@
 
     {% include "menu/menu_admin.html" %}
 
-    <div class="row d-flex justify-content-center" style="padding-top:100px">
+    <div class="row d-flex justify-content-center wrapper contenido " style="padding-top:100px">
       <div class="col-sm-6">
 
         <form method="post">
@@ -28,7 +28,7 @@
               <p style="display:none;"><label for="id_segundo_ap">Segundo Apellido:</label> <input type="text" name="segundo_ap" value="0" maxlength="30" required id="id_segundo_ap"></p>
               <p style="display:none;"><label for="id_telefono">Telefono:</label><input name="telefono" cols="40" rows="20" value="0" required id="id_telefono"></p>
               <div class="form-group">
-                <label for="id_tipo">Tipo de Usuario:</label> <select name="tipo" class="form-control" required id="id_tipo"><option value="1">Estudiante</option><option value="2">Docente</option></select>
+                <label for="id_tipo">Tipo de Usuario:</label> <select name="tipo" class="form-control" required id="id_tipo"><option value="1">Estudiante</option><option value="2">Docente</option><option value="3">Administrador</option></select>
               </div>
               <button type="submit" class="btn btn-primary float-right">Crear</button>
               </div>

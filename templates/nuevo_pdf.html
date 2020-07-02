@@ -7,17 +7,22 @@
     <title>Nuevo PDF</title>
   </head>
   <body>
-    {% include "menu/menu_interno.html" %}
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
+    {% else %}
+      {% include "menu/menu_interno.html" %}
+    {% endif %}
 
-      <div class="container d-flex justify-content-center">
+      <div class="container d-flex justify-content-center wrapper contenido mt-3">
         <div class="card">
-          <form method="post">
+          <form method="post"  enctype="multipart/form-data">
 
             {% csrf_token %}
             <h2 class="card-header">Subir PDF</h2>
             <div class="card-body">
               <label for="id_id_proyecto">Id proyecto: <input name="id_proyecto" required id="id_id_proyecto" readonly value="{{id}}" class="form-control">
-              <label for="id_pdf">Pdf:</label><input type="file" name="pdf" required id="id_pdf" class="form-control">
+              <label for="id_id_proyecto">Titulo: <input type="text" name="pdf_nombre" maxlength="50" required id="id_pdf_nombre" class="form-control">
+              <label for="id_pdf">Pdf:</label><input type="file" name="pdf"  accept="application/pdf" required id="id_pdf" class="form-control">
               <button type="submit" name="button" class="btn float-right btn-primary">Subir</button>
             </div>
             {{ form.errors }}

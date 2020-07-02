@@ -1,3 +1,6 @@
+#! / usr / bin / python
+# - * - codificación: latin-1 - * -
+import os, sys
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import proyecto
@@ -8,7 +11,8 @@ from .models import integrantes_proyecto
 from .models import comentario
 from .models import usuario
 from .models import registro
-
+from .models import lan_page
+from .models import documentos
 
 """
 class SesionForm(forms.ModelForm):
@@ -23,6 +27,7 @@ class SesionForm(AuthenticationForm):
         self.fields['username'].widget.attrs['placeholder'] = 'Nombre de Usuario'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['placeholder'] = 'Contraseña'
+
 #"""
 class ProyectoForm(forms.ModelForm):
     class Meta:
@@ -58,3 +63,13 @@ class RegistroFrom(forms.ModelForm):
     class Meta:
         model = registro
         fields =['registro']
+
+class lan_pageFrom(forms.ModelForm):
+    class Meta:
+        model = lan_page
+        fields = ['titulo','imagen','descripcion','link','visible']
+
+class documentosFrom(forms.ModelForm):
+    class Meta:
+        model = documentos
+        fields = ['documento','documento_nombre','clase','visible']

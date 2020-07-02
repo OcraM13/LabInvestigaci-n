@@ -1,4 +1,10 @@
+#! / usr / bin / python
+# - * - codificación: latin-1 - * -
+import os, sys
 from django.db import models
+
+#def __unicode__(self):
+    #return smart_unicode(("%s" % self.descripcion))
 
 # Create your models here.
 
@@ -17,7 +23,7 @@ class datos_usario(models.Model):
 
 class proyecto(models.Model):
     id_proyecto = models.CharField(max_length = 5, primary_key = True)
-    clase = models.CharField(max_length = 15)
+    clase = models.CharField(max_length = 40)
     nombre_proyecto = models.CharField(max_length = 50)
     nombre_sin = models.CharField(max_length = 30)
     sintesis = models.TextField()
@@ -33,7 +39,7 @@ class pdf(models.Model):
     id_pdf = models.AutoField(primary_key = True)
     pdf_nombre = models.CharField(max_length = 50, null = True)
     id_proyecto = models.ForeignKey(proyecto, on_delete = models.CASCADE)
-    pdf = models.FileField(upload_to='archivos/%Y/%m/%d/', default='')
+    pdf = models.FileField(upload_to='archivos/archivos/%Y/%m/%d/', default='')
     #fecha = models.DateTimeField(auto_now = True, auto_now_add = False)
 
 class comentario(models.Model):
@@ -52,3 +58,16 @@ class notificacion(models.Model):
 class registro(models.Model):
     id = models.AutoField(primary_key = True)
     registro = models.CharField(max_length = 150)
+
+class lan_page(models.Model):
+    titulo = models.CharField(max_length = 100)
+    imagen = models.ImageField(upload_to='archivos/lan_page/%Y/%m/%d', null=True)
+    descripcion = models.TextField(default='')
+    link = models.TextField(default='')
+    visible = models.CharField(max_length = 1)
+
+class documentos(models.Model):
+    documento = models.FileField(upload_to='archivos/documentos/%Y/%m/%d/')
+    documento_nombre = models.CharField(max_length = 50, null = True)
+    clase = models.CharField(max_length = 40)
+    visible = models.CharField(max_length = 1)

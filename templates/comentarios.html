@@ -8,22 +8,54 @@
   </head>
   <body>
 
-    {% include "menu/menu_interno.html" %}
-    <div class="row d-flex justify-content-center mt-5">
+    {% if 1 == admin %}
+      {% include "menu/menu_admin.html" %}
+    {% else %}
+      {% include "menu/menu_interno.html" %}
+    {% endif %}
+
+    <div class="row d-flex justify-content-center mt-5 wrapper contenido ">
 
       <div class="container col-sm-9">
         {% if comentarios %}
           {% for comentario in comentarios %}
             {% for usuario in usuarios %}
               {% if usuario.id_usuario == comentario.id_usuario.id_usuario %}
-                <div class="card">
-                  <div class="card-body">
-                    <h3>{{usuario.nombre}}</h3>
-                    <div class="card">
-                      <p class="mr-3 ml-3">{{comentario.text_comentario}}</p>
+                {%if us.id_usuario == comentario.id_usuario.id_usuario%}
+                  <div class="card">
+                    <div class="card-body">
+                      <h3 text-right>{{usuario.nombre}} <a data-toggle="modal" href="" data-target="#exampleModalCenter{{comentario.id}}">X</a> </h3>
+                      <div class="card">
+                        <p class="mr-3 ml-3">{{comentario.text_comentario}}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                  <div class="modal fade" id="exampleModalCenter{{comentario.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle{{comentario.id}}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle{{comentario.id}}">Borrar Comentario</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                          <a type="button" class="btn btn-primary" href="{% url 'proyecto:borrar_comentario' comentario.id_pdf.id_pdf comentario.id %}" >Borrar</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {%else%}
+                  <div class="card">
+                    <div class="card-body">
+                      <h3>{{usuario.nombre}}</h3>
+                      <div class="card">
+                        <p class="mr-3 ml-3">{{comentario.text_comentario}}</p>
+                      </div>
+                    </div>
+                  </div>
+                {%endif%}
               {% endif %}
             {% endfor %}
           {% endfor %}
@@ -51,5 +83,6 @@
       </div>
 
     </div>
+
   </body>
 </html>

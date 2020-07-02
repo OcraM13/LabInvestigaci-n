@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <title>404</title>
+    <link rel="icon" type="image/png" href="{% static 'img/icons/logotec.ico' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div class="text-center m-5">
+      <img src="{% static 'img/404.png' %}" style="height: 700px;" class="text-center">
+      <div class="m-5">
+        <a type="button" class="btn btn-light btn-lg " href="{% url 'proyecto:inicio' %}">Inicio</a>
+        <a type="button" class="btn btn-light btn-lg " href="http://www.tecjerez.edu.mx">Pagina del TecJerez</a>
+      </div>
+    </div>
+  </body>
+</html>

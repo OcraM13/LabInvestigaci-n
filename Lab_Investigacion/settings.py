@@ -1,3 +1,6 @@
+#! / usr / bin / python
+# - * - codificación: latin-1 - * -
+
 """
 Django settings for Lab_Investigacion project.
 
@@ -116,9 +119,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-SESSION_EXPIRE_SECONDS = 3600  # 1 hour
-SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+#LOGIN_REDIREDCT_URL = reverse_lazy('lista_proyectos')
+#LOGOUT_REDIREDCT_URL = reverse_lazy('sesion')
 
+SESSION_TIMEOUT_REDIRECT = 'index'
+SESSION_EXPIRE_SECONDS = 6300  # 1 hour
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -128,5 +134,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 MEDIA_URL='/archivos/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'archivos')
+
+DEFAULT_CHARSET='utf-8'
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'archivos')

@@ -8,21 +8,23 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/lista_proyectos.css' %}">
   </head>
   <body>
-
-    {% if id == admin %}
+    {% if 1 == admin %}
       {% include "menu/menu_admin.html" %}
     {% else %}
       {% include "menu/menu_interno.html" %}
     {% endif %}
 
-      <div class="container mt-5">
-      {% if usuario %}
+      <div class="container mt-5 mb-5 wrapper contenido ">
+
+        <div class="container">
+          <h4>ID: {{id}}</h4>
+        </div>
+
+      {% if usuario or admin == 1%}
 
         <div class="row">
 
-          <div class="container">
-            <h4>ID: {{id}}</h4>
-          </div>
+
 
           <div class="container ">
             <form class="" method="get">
@@ -31,11 +33,32 @@
             </form>
           </div>
 
-            {% for proyecto in proyectos %}
+          {%if admin != 1%}
 
-              {% for u in usuario %}
+                {% for proyecto in proyectos %}
 
-                {% if u.id_proyecto == proyecto.id_proyecto %}
+                  {% for u in usuario %}
+
+                    {% if u.id_proyecto == proyecto.id_proyecto %}
+                      <div class="col-sm-6" style="padding-top:20px">
+                        <a  class="btn btn-lg btn-block" href="{% url 'proyecto:pag_proyecto' proyecto.id_proyecto %}">
+                        <div class="card" >
+                          <h5 class="card-header">{{proyecto.nombre_proyecto}}</h5>
+                          <div class="card-body text-left">
+                           <h3 class="card-title">ID {{proyecto.id_proyecto}}</h3>
+                           <h5>{{proyecto.clase}} </h5>
+                           <p class="card-text"> porcentaje todal: {{proyecto.porsentaje}}</p>
+                          </div>
+                        </div>
+                        </a>
+                      </div>
+                    {% endif %}
+
+                  {% endfor %}
+                {% endfor %}
+
+            {%else%}
+              {% for proyecto in proyectos %}
                   <div class="col-sm-6" style="padding-top:20px">
                     <a  class="btn btn-lg btn-block" href="{% url 'proyecto:pag_proyecto' proyecto.id_proyecto %}">
                     <div class="card" >
@@ -48,10 +71,8 @@
                     </div>
                     </a>
                   </div>
-                {% endif %}
-
               {% endfor %}
-            {% endfor %}
+          {%endif%}
         </div>
       {% else %}
         <div class="container float-center">

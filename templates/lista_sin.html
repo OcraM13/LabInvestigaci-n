@@ -8,18 +8,20 @@
   </head>
   <body>
     {% include "menu/menu_inicio.html" %}
-    <div class="container">
+    <div class="container wrapper contenido ">
       <h1>Lista de Proyectos</h1>
 
       {% for proyecto in proyectos %}
-      <div class="mt-4">
-        <div class="card">
-          <h1 class="card-header">{{proyecto.nombre_sin}}</h1>
-          <div class="card-body">
-            <p>{{proyecto.sintesis}}</p>
+        {% if proyecto.nombre_sin != 'na' %}
+          <div class="mt-4">
+            <div class="card">
+              <h1 class="card-header">{{proyecto.nombre_sin}}</h1>
+              <div class="card-body">
+                <p>{{proyecto.sintesis}}</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        {% endif %}
       {% endfor %}
 
     </div>
